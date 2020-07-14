@@ -1,0 +1,46 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/user/getUser",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44390"
+        }
+      ],
+      "UpstreamPathTemplate": "/getUsr",
+      "Key": "User",
+      "AutenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/product/getProduct",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44398"
+        }
+      ],
+      "UpstreamPathTemplate": "/getProduct",
+      "Key": "Product"
+    }
+  ],
+  "Aggregates": [
+    {
+      "RouteKeys": [
+        "User",
+        "Product"
+      ],
+      "UpstreamPathTemplate": "/UserAndProduct"
+    }
+  ],
+  "GlobalCOnfigration": {
+    "BaseUrl": "http://localhost:63485"
+  }
+
+}
