@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
-namespace webapi
+namespace ApiGatway
 {
     public class Startup
     {
