@@ -17,16 +17,13 @@ using UserService.Models;
 namespace UserService.Controllers
 {
     [Route("api/user")]
-    [Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
-        
-
-        // GET: api/<UserController>
+         // GET: api/<UserController>
 
         [HttpGet("getUser")]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<string>> Get()
         {
             User user = GetDummyData();
             return Ok(user);
@@ -42,12 +39,13 @@ namespace UserService.Controllers
             };
             return user;
         }
+
         [AllowAnonymous]
         [HttpGet("login")]
-        public IActionResult Get(string name , string password)
+        public IActionResult Get(string name, string password)
         {
             //just hard code here
-            if(name == "cp" && password == "123")
+            if (name == "cp" && password == "123")
             {
                 var now = DateTime.UtcNow;
 
@@ -56,7 +54,7 @@ namespace UserService.Controllers
                     new Claim(JwtRegisteredClaimNames.Sub, name),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, now.ToUniversalTime().ToString(), ClaimValueTypes.Integer),
-                }; 
+                };
                 var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("this is the secret to add some default jwt token lets see how it works"));
                 var tokenValidationParameters = new TokenValidationParameters
                 {
@@ -72,12 +70,12 @@ namespace UserService.Controllers
                 };
 
                 var jwt = new JwtSecurityToken(
-                        issuer:"chandra",
-                        audience:"enduser",
-                        claims:claims,
-                        notBefore:now,
-                        expires:now.Add(TimeSpan.FromMinutes(2)),
-                        signingCredentials:new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+                        issuer: "chandra",
+                        audience: "enduser",
+                        claims: claims,
+                        notBefore: now,
+                        expires: now.Add(TimeSpan.FromMinutes(2)),
+                        signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
 
                     );
                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
@@ -90,13 +88,7 @@ namespace UserService.Controllers
             }
             return NotFound();
         }
-        [HttpGet("Search")]
-        public IActionResult Search(string namelike)
-        {
-            var result = new { aaa = "aaaa", vvv = "" };
-            
-            return Ok(result);
-        }
+
         // POST api/<UserController>
         [HttpPost]
         public void Post([FromBody] string value)
